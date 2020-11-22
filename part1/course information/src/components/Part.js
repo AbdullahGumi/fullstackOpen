@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Part = ( { part, exercise } ) => {
-	return (
-		<p>{part}{' '}{exercise}</p>
-	);
-}
+const Part = ( { part } ) => (
+	<p>{ part }</p>
+);
 
 export default Part;
