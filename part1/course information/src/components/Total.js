@@ -1,19 +1,12 @@
 import React from "react";
 
-const Total = ({ exercises1, exercises2, exercises3 }) => {
+const Total = ({ parts }) => {
 	return (
 		<div>
-			<h3>Total number of exercises: { exercises1 + exercises2 + exercises3 }</h3>
+			<h3>Total number of exercises: { parts[0].exercises + parts[1].exercises + parts[2].exercises }</h3>
 		</div>
 		)
 };
 
 export default Total;
 
-  // let totalNumber = 0;
-  // if (parts) {
-  //   parts.map(part => {
-  //     totalNumber = totalNumber + part.exercises;
-  //   });
-  // }
-  // return <p>Total Number: {totalNumber}</p>;
