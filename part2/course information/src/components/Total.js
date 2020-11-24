@@ -1,8 +1,7 @@
 import React from "react";
 
 const Total = ({ parts }) => {
-	let accumulated = 0
-	 parts.map(part => accumulated = part.exercises + accumulated);
+	let accumulated = parts.reduce((s, part) => s + part.exercises, 0);
 	return (
 		<div>
 			{<h3>Total number of exercises: { accumulated }</h3>}
