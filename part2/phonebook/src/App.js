@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', id: 1 }
+    { name: 'Arto Hellas', id: 1 },
+    { name: 'Arto marine', id: 2 }
   ]) 
   const [ newName, setNewName ] = useState('')
 
@@ -12,10 +13,12 @@ const App = () => {
       name: newName,
       id: persons.length + 1,
     }
-    setPersons([...persons, newPerson]);
-    console.log('add:',persons);
-    setNewName("");
+    const personName = persons.map(per => per.name)
 
+    personName.includes(newName) ? (alert(`${newName} is already added to phonebook`)
+      ) : (
+      setPersons([...persons, newPerson]));
+      // console.log('good to go')
   }
 
   const handleInputChange = e => {
