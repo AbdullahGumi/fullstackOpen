@@ -1,5 +1,6 @@
 import React from 'react';
 import Country from './Country';
+import CountryWithDetails from './CountryWithDetails';
 
 const Countries = ({ filteredCountry }) => {
  return (
@@ -10,7 +11,7 @@ const Countries = ({ filteredCountry }) => {
             filteredCountry.length === 1 ? (
                 <Country filteredCountry={filteredCountry} />
               ) : (
-                filteredCountry.length > 1 && filteredCountry.map(country => <p key={country.name}>{country.name}</p>)
+                filteredCountry.length > 1 &&  <CountryWithDetails filteredCountry={filteredCountry}/>
               ) 
           )
       }
