@@ -1,4 +1,5 @@
 import React from 'react';
+import CountryWeather from './CountryWeather';
 
 const Country = ({ filteredCountry, details}) => {
  return (
@@ -25,6 +26,7 @@ const Country = ({ filteredCountry, details}) => {
 				 			{filteredCountry.map(lang => lang.languages.map(speak => <li key={speak.name}>{speak.name}</li>))}
 				 		</ul>
 				 		<img style={{width: '250px', height: '250px'}} alt='flag' src={filteredCountry[0].flag}/>
+				 		<CountryWeather capitalName={filteredCountry[0].capital} />
  					</div>
  				)
  		}
