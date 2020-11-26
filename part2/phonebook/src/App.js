@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 
 import personService from './personService';
 
@@ -11,6 +12,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
   const [ filteredName, setFilteredName ] = useState('');
+  const [message , setMessage] = useState('');
+  const [messageColor , setMessageColor] = useState(null);
   useEffect(() => {
     personService.getAllPersons().then(res => setPersons(res.data))
   }, [])
@@ -29,11 +32,26 @@ const App = () => {
     	window
     		.confirm(
     			`${newName} is already added to phonebook, do you want to replace the old number with a new one ?`
-    		) && persons.map(person =>  
+    		) && persons.map(person =>  {
     							person.name === newName &&
-    							 personService.changeNumber(person.id, {...newPerson, number: newNumber}))
+    							 personService
+                    .changeNumber(person.id, {...newPerson, number: newNumber})
+                      .catch(err => {
+                        setMessage(`Opps information of ${newName} has already been removed from the server :(`);
+                        setTimeout(() => {setMessage(null)}, 5000);
+                        setMessageColor(null);                        
+                      })
+                   setMessage(`${newName} Successfully changed number to ${newNumber} `);
+                   setTimeout(() => {setMessage(null)}, 5000);
+                   setMessageColor(true);
+                  })
       ) : (
-      personService.addNewPerson(newPerson).then(res => setPersons([...persons, res.data]))
+      personService.addNewPerson(newPerson).then(res => {
+        setPersons([...persons, res.data]);
+        setMessage(`Successfully added ${newName}`);
+        setTimeout(() => {setMessage(null)}, 5000);
+        setMessageColor(true);
+      })
       );
   }
 
@@ -58,6 +76,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} greenMessage={messageColor}/>
       <Filter filterNames={filterNames} />   
       <h2>Add a new </h2>
       <PersonForm addName={addName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
