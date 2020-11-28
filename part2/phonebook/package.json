@@ -28,6 +28,7 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json"
   },
+  "proxy": "https://sleepy-reef-74366.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -42,6 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://europe-west1-social-ish-app.cloudfunctions.net/api"
+  }
 }
