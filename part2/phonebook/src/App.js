@@ -46,12 +46,18 @@ const App = () => {
                    setMessageColor(true);
                   })
       ) : (
-      personService.addNewPerson(newPerson).then(res => {
-        setPersons([...persons, res.data]);
-        setMessage(`Successfully added ${newName}`);
-        setTimeout(() => {setMessage(null)}, 5000);
-        setMessageColor(true);
-      })
+      personService.addNewPerson(newPerson)
+	      .then(res => {
+	        setPersons([...persons, res.data]);
+	        setMessage(`Successfully added ${newName}`);
+	        setTimeout(() => {setMessage(null)}, 5000);
+	        setMessageColor(true);
+	      })
+	      .catch(err => {	      	
+	        setMessage(err.response.data.error);
+	        setTimeout(() => {setMessage(null)}, 5000);
+            setMessageColor(null);       	      	
+	      })
       );
   }
 

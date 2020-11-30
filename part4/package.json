@@ -6,13 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "lint": "eslint ."
   },
   "author": "Abdullah Gumi",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.14.0",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   },
   "dependencies": {
@@ -25,5 +26,8 @@
   },
   "engines": {
     "node": "12.13.1"
-  }
+  },
+   "jest": {
+   "testEnvironment": "node"
+ }
 }
