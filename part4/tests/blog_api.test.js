@@ -74,8 +74,14 @@ test("when a new blog has no likes property, its value will be 0 by default", as
 
   const response = await api.post("/api/blogs").send(newBlog)
   expect(response.body.likes).toBe(0);
+});
 
-
+test("if the body has no title or url the backend responds with 400 Bad Request ", async () => {
+  const newBlog = {
+    author: "mark may II"
+  };
+  const response = await api.post("/api/blogs").send(newBlog)
+  expect(response.status).toBe(400);
 });
 
 afterAll(() => {
