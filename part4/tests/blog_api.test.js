@@ -65,6 +65,19 @@ test("blog is created successfully", async () => {
 
 });
 
+test("when a new blog has no likes property, its value will be 0 by default", async () => {
+  const newBlog = {
+    title: "Adventure Time",
+    author: "mark may II",
+    url: "https://blog.com"
+  };
+
+  const response = await api.post("/api/blogs").send(newBlog)
+  expect(response.body.likes).toBe(0);
+
+
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
