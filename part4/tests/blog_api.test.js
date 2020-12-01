@@ -49,6 +49,22 @@ test("unique identifier property of the blog posts is named id", async () => {
 
 });
 
+test("blog is created successfully", async () => {
+  const newBlog = {
+    title: "Spongebob Adventure",
+    author: "mark may",
+    url: "https://blog.com"
+  };
+
+  await api.post("/api/blogs").send(newBlog).expect(201);
+
+  const response = await api.get("/api/blogs");
+
+  expect(response.body.length).toBe(initialBlogs.length + 1);
+  expect(response.body).toContain(...response.body, newBlog);
+
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
