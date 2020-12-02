@@ -1,20 +1,38 @@
 // /*eslint-env es6*/
 const blogsRouter = require('express').Router()
-const Blog = require('../models/blog')
+const Blog = require('../models/blog');
+const User = require('../models/user');
 
 blogsRouter.get('/', async (request, response) => {
- const blogs = await Blog.find({});
+ const blogs = await Blog.find({}).populate('user', { username: 1, name: 1});
    return response.json(blogs)
    return response.json(blogs.map(blog => blog.toJSON()))
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', async (request, response, next) => {
 	if (!request.body.title || !request.body.url) {
 		return response.status(400).end();
 	} else {
-	    const blog = new Blog(request.body)
-		const result = await blog.save();
-	    return response.status(201).json(result)
+    try {
+      console.log('request.body.userId: ', request.body.userId)
+      const users = await User.find({});
+      const user = users[0]
+      console.log('user: ', user)
+      const blog = new Blog({
+        title: "Ultimate Blogger",
+        author: "Elon Musk",
+        url: "https://blog.com",      
+        user: user._id
+      })
+  		const result = await blog.save();
+      user.blogs = user.blogs.concat(result._id);
+      await user.save();
+      return response.status(201).json(result);
+    } catch(e) {
+        next(e)
+        response.status(500).end();
+        console.log(e);
+    }
 	}
 })
 
