@@ -25,7 +25,6 @@ blogsRouter.post('/', async (request, response, next) => {
 
 
       const user = await User.findById(decodedToken.id);
-      console.log('user: ', user)
       const blog = new Blog({
         title: request.body.title,
         author: request.body.author,
@@ -44,12 +43,20 @@ blogsRouter.post('/', async (request, response, next) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
- const blog = await Blog.findByIdAndDelete(request.params.id);
-    if (blog) {
-      response.json(blog.toJSON());
-    } else {
-      response.status(400).json({ error: 'Blog not found' });
-    }
+  const token = request.token;
+   const decodedToken = jwt.verify(token, process.env.SECRET)
+   const blog = await Blog.findById(request.params.id);
+      if (!blog) {
+        return response.status(400).json({ error: 'Blog not found' });
+      }
+
+      if (blog.user.toString() === decodedToken.id.toString()) {
+        await Blog.findByIdAndDelete(request.params.id)
+        return response.status(204).end();
+      } else {
+        return response.status(400).json({ error: `You can't perform this operation` })
+      }
+
 })
 
 blogsRouter.put('/:id', async (request, response) => {
