@@ -2,6 +2,15 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
 
 blogsRouter.get('/', async (request, response) => {
  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1});
@@ -14,14 +23,19 @@ blogsRouter.post('/', async (request, response, next) => {
 		return response.status(400).end();
 	} else {
     try {
-      console.log('request.body.userId: ', request.body.userId)
-      const users = await User.find({});
-      const user = users[0]
+      const token = getTokenFrom(request);
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+      if (!token || !decodedToken.id) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+      }
+
+
+      const user = await User.findById(decodedToken.id);
       console.log('user: ', user)
       const blog = new Blog({
-        title: "Ultimate Blogger",
-        author: "Elon Musk",
-        url: "https://blog.com",      
+        title: request.body.title,
+        author: request.body.author,
+        url: request.body.url,      
         user: user._id
       })
   		const result = await blog.save();
@@ -31,7 +45,6 @@ blogsRouter.post('/', async (request, response, next) => {
     } catch(e) {
         next(e)
         response.status(500).end();
-        console.log(e);
     }
 	}
 })
