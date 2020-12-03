@@ -20,6 +20,10 @@ const App = () => {
         username, password
       })
       console.log('user:', loggedUser)
+
+      window.localStorage.setItem(
+        'user', JSON.stringify(loggedUser)
+      )
       setUser(loggedUser);
       setUsername('');
       setPassword('');
@@ -39,11 +43,26 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    const savedUser = window.localStorage.getItem('user')
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        setUser(user);
+    }
+  }, [])
+
+
+  const logout = () => {
+    window.localStorage.removeItem('user')
+    setUser(null);
+  }
+
   return (
     <div>
     {user ? (
         <div>
           <h2>blogs</h2>
+          <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
           )}    
