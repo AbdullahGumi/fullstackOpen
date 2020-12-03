@@ -10,7 +10,8 @@ const App = () => {
   const [username, setUsername] = useState(''); 
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('')
+  const [messageColor, setMessageColor] = useState('')
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -34,11 +35,11 @@ const App = () => {
       setUsername('');
       setPassword('');
     } catch(e) {
-      setErrorMessage('Wrong Credentials');
+      setMessage('Invalid username or password');
+      setMessageColor('red')
       setTimeout(() => {
-        setErrorMessage(null);
+        setMessage(null);
       }, 5000)
-      console.log('execption', e);
     }
 
   }
@@ -51,6 +52,9 @@ const App = () => {
       url
     }
     blogService.createBlog(newBlog);
+    setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`)
+    setMessageColor('green')
+    setTimeout(() => setMessage(null), 5000)
   }
 
   useEffect(() => {
@@ -76,13 +80,11 @@ const App = () => {
 
   return (
     <div>
+      <Notfication  message={message} messageColor={messageColor}/>
     {user ? (
         <div>
           <h2>blogs</h2>
           <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
-          {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
-          )}
           <h2>Create your own blog!</h2>
           <form onSubmit={handleSubmit}>
             <div>
@@ -114,6 +116,9 @@ const App = () => {
             </div>            
             <button type="submit">create</button>
           </form>              
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}
         </div>
       ) : (
         <div>
