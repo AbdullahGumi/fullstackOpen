@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import NewBlog from './components/NewBlog';
 import Blog from './components/Blog';
+
 import Notfication from './components/Notification';
 
 import blogService from './services/blogs';
@@ -15,7 +17,8 @@ const App = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
-
+  const [isNewBlogFormToggled, setNewBlogFormToggled ] = useState(false);
+  const [newBlogButtonText, setNewBlogButtonText ] = useState('New blog');
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -55,6 +58,11 @@ const App = () => {
     setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`)
     setMessageColor('green')
     setTimeout(() => setMessage(null), 5000)
+    setNewBlogFormToggled(false);
+    setNewBlogButtonText('New Blog');
+    setAuthor('')
+    setUrl('')
+    setTitle('')
   }
 
   useEffect(() => {
@@ -78,6 +86,11 @@ const App = () => {
     setUser(null);
   }
 
+  const toggleNewBlogsForm = () => {
+    setNewBlogFormToggled(!isNewBlogFormToggled);
+    isNewBlogFormToggled ? setNewBlogButtonText('New Blog') : setNewBlogButtonText('cancel')
+  }
+
   return (
     <div>
       <Notfication  message={message} messageColor={messageColor}/>
@@ -85,40 +98,22 @@ const App = () => {
         <div>
           <h2>blogs</h2>
           <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
-          <h2>Create your own blog!</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              title:
-                <input
-                type="text"
-                value={title}
-                name="Title"
-                onChange={({ target }) => setTitle(target.value)}
-              />
-            </div>
-            <div>
-              author
-                <input
-                type="text"
-                value={author}
-                name="Author"
-                onChange={({ target }) => setAuthor(target.value)}
-              />
-            </div>
-            <div>
-              url
-                <input
-                type="text"
-                value={url}
-                name="Url"
-                onChange={({ target }) => setUrl(target.value)}
-              />
-            </div>            
-            <button type="submit">create</button>
-          </form>              
+          {isNewBlogFormToggled &&
+            <NewBlog 
+              handleSubmit={handleSubmit} 
+              title={title} 
+              setTitle={setTitle} 
+              author={author} 
+              setAuthor={setAuthor} 
+              url={url} 
+              setUrl={setUrl} 
+              blogs={blogs} 
+            />            
+          }
+          <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
-          )}
+          )}          
         </div>
       ) : (
         <div>
