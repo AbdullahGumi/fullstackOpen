@@ -14,9 +14,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('')
   const [messageColor, setMessageColor] = useState('')
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
+
   const [isNewBlogFormToggled, setNewBlogFormToggled ] = useState(false);
   const [newBlogButtonText, setNewBlogButtonText ] = useState('New blog');
 
@@ -47,23 +45,7 @@ const App = () => {
 
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newBlog = {
-      title,
-      author,
-      url
-    }
-    blogService.createBlog(newBlog);
-    setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`)
-    setMessageColor('green')
-    setTimeout(() => setMessage(null), 5000)
-    setNewBlogFormToggled(false);
-    setNewBlogButtonText('New Blog');
-    setAuthor('')
-    setUrl('')
-    setTitle('')
-  }
+
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -100,14 +82,10 @@ const App = () => {
           <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
           {isNewBlogFormToggled &&
             <NewBlog 
-              handleSubmit={handleSubmit} 
-              title={title} 
-              setTitle={setTitle} 
-              author={author} 
-              setAuthor={setAuthor} 
-              url={url} 
-              setUrl={setUrl} 
-              blogs={blogs} 
+              setMessage={setMessage} 
+              setMessageColor={setMessageColor} 
+              setNewBlogFormToggled={setNewBlogFormToggled} 
+              setNewBlogButtonText={setNewBlogButtonText}
             />            
           }
           <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>

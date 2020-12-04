@@ -1,6 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const NewBlog = ({ handleSubmit, title, setTitle, author, setAuthor, url, setUrl, blogs }) => {
+import blogService from '../services/blogs';
+
+const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlogButtonText }) => {
+
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newBlog = {
+      title,
+      author,
+      url
+    }
+    blogService.createBlog(newBlog);
+    setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`)
+    setMessageColor('green')
+    setTimeout(() => setMessage(null), 5000)
+    setNewBlogFormToggled(false);
+    setNewBlogButtonText('New Blog');
+    setAuthor('')
+    setUrl('')
+    setTitle('')
+  }
+
 	return (
 		<div>
           <h2>Create your own blog!</h2>
