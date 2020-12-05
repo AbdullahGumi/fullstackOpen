@@ -62,8 +62,6 @@ blogsRouter.delete('/:id', async (request, response) => {
 blogsRouter.put('/:id', async (request, response) => {
   try {
    const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true});
-   console.log('blog at backend:', blog)
-   console.log('req.body:', request.body)
       if (blog) {
         response.json(blog.toJSON());
       } else {

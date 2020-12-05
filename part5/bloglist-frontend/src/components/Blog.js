@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import blogService from '../services/blogs';
 
@@ -6,6 +6,16 @@ import blogService from '../services/blogs';
 const Blog = ({ blog }) => {
 
 const [isView, setView] = useState(false);
+const [mainUser, setMainUser] = useState([]);
+
+  useEffect(() => {
+    const savedUser = window.localStorage.getItem('user')
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        setMainUser(user);
+        blogService.setToken(user.token)
+    }
+  }, [])
 
   const blogStyle = {
     paddingTop: 10,
@@ -28,9 +38,15 @@ const handleLike = (id, blog) => {
 		title: blog.title,
 		url: blog.url
 	}
-	
+
 	blogService.likeBlog(id, updatedBlog)
 
+}
+
+const handleDelete = (blog) => {
+	window.confirm(`Do you want to remove blog ${blog.title} by ${blog.author} ?`)
+			&& blogService.deleteBlog(blog.id)
+	
 }
 
 	return (
@@ -41,6 +57,9 @@ const handleLike = (id, blog) => {
 			    <p>{blog.url}</p>
 			    <p>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
 			    <p>{blog.author}</p>
+			    {mainUser.id === blog.user.id &&
+					<button onClick={() => handleDelete(blog)}>Remove</button>
+			    }
 			  </div>	  			
 	  		) : (
 			  <div>
