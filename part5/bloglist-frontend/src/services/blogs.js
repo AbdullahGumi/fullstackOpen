@@ -23,7 +23,9 @@ const likeBlog = async ( blogId, updatedBlog ) => {
 
 const getAll = () => {
   const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+  return request.then(response => {
+  	return response.data.sort((a, b) => b.likes - a.likes)
+  })
 }
 
 export default { getAll, createBlog, setToken, likeBlog }
