@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const Notification = ({ message, messageColor }) => {
 
@@ -21,6 +22,11 @@ const Notification = ({ message, messageColor }) => {
 			}
 		</div>
 	);
+}
+
+Notification.propTypes = {
+  message: PropTypes.string.isRequired
+  messageColor: PropTypes.string.isRequired
 }
 
 export default Notification;
