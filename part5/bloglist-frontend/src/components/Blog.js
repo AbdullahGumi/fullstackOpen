@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+
+import blogService from '../services/blogs';
+
+
 const Blog = ({ blog }) => {
 
 const [isView, setView] = useState(false);
@@ -16,8 +20,16 @@ const handleBlogView = () => {
 
 }
 
-const handleLike = () => {
-	console.log('Liked...')
+const handleLike = (id, blog) => {
+	const updatedBlog = {
+		user: blog.user.id,
+		likes: ++ blog.likes,
+		author: blog.author,
+		title: blog.title,
+		url: blog.url
+	}
+	
+	blogService.likeBlog(id, updatedBlog)
 
 }
 
@@ -27,7 +39,7 @@ const handleLike = () => {
 			  <div>
 			    <p>{blog.title}<button onClick={handleBlogView}>hide</button></p>
 			    <p>{blog.url}</p>
-			    <p>{blog.likes}<button onClick={handleLike}>like</button></p>
+			    <p>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
 			    <p>{blog.author}</p>
 			  </div>	  			
 	  		) : (
