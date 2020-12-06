@@ -52,7 +52,7 @@ const handleDelete = (blog) => {
 	return (
 	  <div style={blogStyle} className='blog'>
 	  	{isView ? (
-			  <div>
+			  <div className='blog-details'>
 			    <p>{blog.title}<button onClick={handleBlogView}>hide</button></p>
 			    <p>{blog.url}</p>
 			    <p>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
