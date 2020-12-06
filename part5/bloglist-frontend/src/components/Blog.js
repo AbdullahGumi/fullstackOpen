@@ -50,7 +50,7 @@ const handleDelete = (blog) => {
 }
 
 	return (
-	  <div style={blogStyle}>
+	  <div style={blogStyle} className='blog'>
 	  	{isView ? (
 			  <div>
 			    <p>{blog.title}<button onClick={handleBlogView}>hide</button></p>
@@ -62,7 +62,7 @@ const handleDelete = (blog) => {
 			    }
 			  </div>	  			
 	  		) : (
-			  <div>
+			  <div className='blog-overview'>
 			    {blog.title} {blog.author}<button onClick={handleBlogView}>view</button>
 			  </div>	  		
 	  		)
