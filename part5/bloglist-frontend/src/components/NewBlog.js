@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import blogService from '../services/blogs';
-
-const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlogButtonText }) => {
+const NewBlog = ({ onBlogAdd }) => {
 
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -10,17 +8,11 @@ const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlo
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newBlog = {
+    onBlogAdd({
       title,
       author,
       url
-    }
-    blogService.createBlog(newBlog);
-    setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`)
-    setMessageColor('green')
-    setTimeout(() => setMessage(null), 5000)
-    setNewBlogFormToggled(false);
-    setNewBlogButtonText('New Blog');
+    });
     setAuthor('')
     setUrl('')
     setTitle('')
@@ -33,6 +25,7 @@ const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlo
             <div>
               title:
                 <input
+                id='title'
                 type="text"
                 value={title}
                 name="Title"
@@ -42,6 +35,7 @@ const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlo
             <div>
               author
                 <input
+                id='author'
                 type="text"
                 value={author}
                 name="Author"
@@ -51,6 +45,7 @@ const NewBlog = ({ setMessage, setMessageColor, setNewBlogFormToggled, setNewBlo
             <div>
               url
                 <input
+                id='url'
                 type="text"
                 value={url}
                 name="Url"

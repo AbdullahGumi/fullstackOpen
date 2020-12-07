@@ -73,6 +73,16 @@ const App = () => {
     isNewBlogFormToggled ? setNewBlogButtonText('New Blog') : setNewBlogButtonText('cancel')
   }
 
+  const handleBlogAddition = async (newBlog) => {
+    const blog = await blogService.createBlog(newBlog);
+    setBlogs([...blogs, blog]);
+    setMessage(`a new blog "${newBlog.title}" by ${newBlog.author} was added`);
+    setMessageColor('green');
+    setTimeout(() => setMessage(null), 5000);
+    setNewBlogFormToggled(false);
+    setNewBlogButtonText('New Blog');    
+  }
+
   return (
     <div>
       <Notfication  message={message} messageColor={messageColor}/>
@@ -82,6 +92,7 @@ const App = () => {
           <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
           {isNewBlogFormToggled &&
             <NewBlog 
+              onBlogAdd={handleBlogAddition}
               setMessage={setMessage} 
               setMessageColor={setMessageColor} 
               setNewBlogFormToggled={setNewBlogFormToggled} 
