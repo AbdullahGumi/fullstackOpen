@@ -91,13 +91,7 @@ const App = () => {
           <h2>blogs</h2>
           <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
           {isNewBlogFormToggled &&
-            <NewBlog 
-              onBlogAdd={handleBlogAddition}
-              setMessage={setMessage} 
-              setMessageColor={setMessageColor} 
-              setNewBlogFormToggled={setNewBlogFormToggled} 
-              setNewBlogButtonText={setNewBlogButtonText}
-            />            
+            <NewBlog onBlogAdd={handleBlogAddition}/>            
           }
           <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>
           {blogs.map(blog =>
