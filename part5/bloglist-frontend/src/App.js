@@ -98,9 +98,13 @@ const App = () => {
             <NewBlog onBlogAdd={handleBlogAddition}/>            
           }
           <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>
-          {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} reRenderAfterEvent={reRenderAfterEvent} />
-          )}          
+          <div className= 'blog-list'>
+            {
+              blogs.map(blog =>
+              <Blog key={blog.id} blog={blog} reRenderAfterEvent={reRenderAfterEvent} />
+            )              
+            }  
+          </div>          
         </div>
       ) : (
         <div>

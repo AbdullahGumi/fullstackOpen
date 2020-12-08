@@ -71,6 +71,31 @@ describe('Blog app', function() {
 		cy.contains('Remove').click()
 
 	})
+
+	it('blogs are ordered from highest likes to lowest', function() {
+
+		cy.createBlog({ title: 'Blog it', author: 'mack lam', url: 'https://google.com', likes: 20 })
+		cy.createBlog({ title: 'Bloggin master', author: 'jack lam', url: 'https://google.com', likes: 18 })
+		cy.createBlog({ title: 'PRO BLOGGER', author: 'lam lam', url: 'https://google.com', likes: 12 })
+		cy.createBlog({ title: 'Ultimate Blogger', author: 'sir lam', url: 'https://google.com', likes: 699 })
+
+		cy.get('.blog-list').children().eq(0).as('1stBlog')
+		cy.get('.blog-list').children().eq(1).as('2ndBlog')
+		cy.get('.blog-list').children().eq(2).as('3rdBlog')
+		cy.get('.blog-list').children().eq(3).as('4thBlog')
+
+		cy.get('@1stBlog').contains('view').click()
+		cy.get('@2ndBlog').contains('view').click()
+		cy.get('@3rdBlog').contains('view').click()
+		cy.get('@4thBlog').contains('view').click()
+
+		cy.get('@1stBlog').contains('699')
+		cy.get('@2ndBlog').contains('20')
+		cy.get('@3rdBlog').contains('18')
+		cy.get('@4thBlog').contains('12')
+
+	})
+
   })
 
 })
