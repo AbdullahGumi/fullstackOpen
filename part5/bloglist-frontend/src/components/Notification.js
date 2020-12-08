@@ -14,7 +14,7 @@ const Notification = ({ message, messageColor }) => {
 	}
 
 	return (
-		<div className='error'>
+		<div className='message'>
 			{message &&
 				<div style={messageStyle}>
 					<span>{message}</span>

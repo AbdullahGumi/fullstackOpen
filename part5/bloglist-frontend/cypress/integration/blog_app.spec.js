@@ -30,7 +30,26 @@ describe('Blog app', function() {
     cy.get('#password').type('1234567890')
     cy.get('#login-button').click()
 
-	cy.get('.error').should('contain', 'Invalid username or password')
+	cy.get('.message').should('contain', 'Invalid username or password')
     })
-  })  
+  })
+
+  describe.only('When logged in', function() {
+    beforeEach(function() {
+    cy.get('#username').type('appman')
+    cy.get('#password').type('1234567890')
+    cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('New blog').click()
+      cy.get('#title').type('Ultimate Cypress Blog')
+      cy.get('#author').type('Cypreman')
+      cy.get('#url').type('https://Cypress.io')
+      cy.contains('create').click()
+      cy.get('.message').should('contain', 'a new blog "Ultimate Cypress Blog" by Cypreman was added')
+      cy.contains('Ultimate Cypress Blog Cypreman')
+    })
+  })
+
 })
