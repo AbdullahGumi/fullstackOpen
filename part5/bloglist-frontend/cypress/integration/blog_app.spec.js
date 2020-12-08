@@ -36,9 +36,8 @@ describe('Blog app', function() {
 
   describe.only('When logged in', function() {
     beforeEach(function() {
-    cy.get('#username').type('appman')
-    cy.get('#password').type('1234567890')
-    cy.get('#login-button').click()
+    cy.login({ username: 'appman', password: '1234567890' })
+
     })
 
     it('A blog can be created', function() {
@@ -50,6 +49,8 @@ describe('Blog app', function() {
       cy.get('.message').should('contain', 'a new blog "Ultimate Cypress Blog" by Cypreman was added')
       cy.contains('Ultimate Cypress Blog Cypreman')
     })
+	  	
+	  	
 
     it('A user can like a blog', function() {
       cy.contains('New blog').click()
@@ -61,7 +62,15 @@ describe('Blog app', function() {
       cy.contains('like').click()
       cy.get('.liked').contains('1')
 
+
     })
+
+	it('user who created a blog can delete it', function() {
+		cy.createBlog({ title: 'Blog it', author: 'mack lam', url: 'https://google.com' })
+		cy.contains('view').click()
+		cy.contains('Remove').click()
+
+	})
   })
 
 })
