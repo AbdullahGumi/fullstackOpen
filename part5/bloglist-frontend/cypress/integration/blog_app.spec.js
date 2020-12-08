@@ -50,6 +50,18 @@ describe('Blog app', function() {
       cy.get('.message').should('contain', 'a new blog "Ultimate Cypress Blog" by Cypreman was added')
       cy.contains('Ultimate Cypress Blog Cypreman')
     })
+
+    it('A user can like a blog', function() {
+      cy.contains('New blog').click()
+      cy.get('#title').type('Ultimate Cypress Blog')
+      cy.get('#author').type('Cypreman')
+      cy.get('#url').type('https://Cypress.io')
+      cy.contains('create').click()
+      cy.contains('view').click()
+      cy.contains('like').click()
+      cy.get('.liked').contains('1')
+
+    })
   })
 
 })

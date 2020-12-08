@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import blogService from '../services/blogs';
 
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, reRenderAfterLike }) => {
 
 const [isView, setView] = useState(false);
 const [mainUser, setMainUser] = useState([]);
@@ -40,6 +40,7 @@ const handleLike = (id, blog) => {
 	}
 
 	blogService.likeBlog(id, updatedBlog)
+	reRenderAfterLike()
 
 }
 
@@ -55,7 +56,7 @@ const handleDelete = (blog) => {
 			  <div className='blog-details'>
 			    <p>{blog.title}<button onClick={handleBlogView}>hide</button></p>
 			    <p>{blog.url}</p>
-			    <p>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
+			    <p className='liked'>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
 			    <p>{blog.author}</p>
 			    {mainUser.id === blog.user.id &&
 					<button onClick={() => handleDelete(blog)}>Remove</button>

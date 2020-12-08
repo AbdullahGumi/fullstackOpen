@@ -83,6 +83,10 @@ const App = () => {
     setNewBlogButtonText('New Blog');    
   }
 
+  const reRenderAfterLike = () => {
+    setBlogs([...blogs])
+  }
+
   return (
     <div>
       <Notfication  message={message} messageColor={messageColor}/>
@@ -95,7 +99,7 @@ const App = () => {
           }
           <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} reRenderAfterLike={reRenderAfterLike} />
           )}          
         </div>
       ) : (
