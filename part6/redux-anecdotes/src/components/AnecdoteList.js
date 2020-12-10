@@ -4,8 +4,7 @@ import { makeVote } from '../reducers/anecdoteReducer.js';
 import { setNotification } from '../reducers/notificationReducer';
 
 const AnecdoteList = ({ makeVote, setNotification, anecdotes, filter }) => {
-  console.log('dotes', anecdotes)
-  const anecd = anecdotes.filter(anec => anec.content.toLowerCase().includes(filter.toLowerCase()))
+  const anecdote = anecdotes.filter(anec => anec.content.toLowerCase().includes(filter.toLowerCase()))
   const vote = (anecdote) => {
    makeVote(anecdote)
    setNotification(`You voted "${anecdote.content}"`, 5)
@@ -13,7 +12,7 @@ const AnecdoteList = ({ makeVote, setNotification, anecdotes, filter }) => {
 
 	return (
 	<div>
-      {anecd.sort((a, b)=> b.votes - a.votes).map(anecdote =>
+      {anecdote.sort((a, b)=> b.votes - a.votes).map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
