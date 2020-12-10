@@ -7,7 +7,7 @@ const AnecdoteList = () => {
   const anecdotes = useSelector(state => state.anecdotes.filter(anec => anec.content.toLowerCase().includes(state.filter.toLowerCase())))
   const dispatch = useDispatch()
   const vote = (anecdote) => {
-    dispatch(makeVote(anecdote.id))
+    dispatch(makeVote(anecdote))
     dispatch(setMessage(`You voted "${anecdote.content}"`))
     setTimeout(() => dispatch(removeMessage()), 5000)    
   }	
