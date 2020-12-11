@@ -21,7 +21,9 @@ export const setNotification = (message, timeout) => {
         type: 'SET_MESSAGE',
         data: message        
       })
-      setTimeout(() => dispatch(clearNotification()), timeout)
+      setTimeout(()=> {
+        dispatch(clearNotification())
+      }, timeout * 1000)
   }
 }
 
