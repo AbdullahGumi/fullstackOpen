@@ -7,7 +7,7 @@ const AnecdoteList = ({ makeVote, setNotification, anecdotes, filter }) => {
   const anecdote = anecdotes.filter(anec => anec.content.toLowerCase().includes(filter.toLowerCase()))
   const vote = (anecdote) => {
    makeVote(anecdote)
-   setNotification(`You voted "${anecdote.content}"`, 5)
+   setNotification(`You voted "${anecdote.content}"`, 50)
   }	
 
 	return (
