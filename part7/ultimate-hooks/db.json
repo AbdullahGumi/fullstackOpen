@@ -1,0 +1,41 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "asdas",
+      "id": 3
+    },
+    {
+      "content": "asdas",
+      "id": 4
+    },
+    {
+      "content": "New note",
+      "id": 5
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "a",
+      "number": "asda",
+      "id": 2
+    },
+    {
+      "name": "Abdullah Gumi",
+      "number": "+234 81 353434 3",
+      "id": 3
+    }
+  ]
+}
