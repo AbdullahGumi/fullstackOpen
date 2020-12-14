@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 
 import blogService from '../services/blogs';
 
 
-const Blog = ({ blog }) => {
-
-const [isView, setView] = useState(false);
+const Blog = ({ blogs}) => {
+const id = useParams().id;
+const sameBlog = blogs.find(blog => blog.id === id);
 const [mainUser, setMainUser] = useState([]);
 
   useEffect(() => {
@@ -25,10 +26,6 @@ const [mainUser, setMainUser] = useState([]);
     marginBottom: 5
   }
 
-const handleBlogView = () => {
-	setView(!isView);
-
-}
 
 const handleLike = (id, blog) => {
 	const updatedBlog = {
@@ -51,22 +48,17 @@ const handleDelete = (blog) => {
 
 	return (
 	  <div style={blogStyle} className='blog'>
-	  	{isView ? (
+		  {sameBlog &&
 			  <div className='blog-details'>
-			    <p>{blog.title}<button onClick={handleBlogView}>hide</button></p>
-			    <p>{blog.url}</p>
-			    <p className='liked'>{blog.likes}<button onClick={()=> handleLike(blog.id, blog)}>like</button></p>
-			    <p>{blog.author}</p>
-			    {mainUser.id === blog.user.id &&
-					<button onClick={() => handleDelete(blog)}>Remove</button>
+			    <h1>{sameBlog.title}</h1>
+			    <a href={`${sameBlog.url}`}>{sameBlog.url}</a>
+			    <p className='liked'>{sameBlog.likes} likes <button onClick={()=> handleLike(sameBlog.id, sameBlog)}>like</button></p>
+			    <p>added by {sameBlog.author}</p>
+			    {mainUser.id === sameBlog.user.id &&
+					<button onClick={() => handleDelete(sameBlog)}>Remove</button>
 			    }
-			  </div>	  			
-	  		) : (
-			  <div className='blog-overview'>
-			    {blog.title} {blog.author}<button onClick={handleBlogView}>view</button>
-			  </div>	  		
-	  		)
-	  	}
+			  </div>		  	
+		  }
 	  </div>
 	);
 }

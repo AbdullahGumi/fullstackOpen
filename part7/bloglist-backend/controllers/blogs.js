@@ -73,4 +73,15 @@ blogsRouter.put('/:id', async (request, response) => {
   }
 })
 
+blogsRouter.get("/:id", async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id).populate('blogs', { url: 1, title: 1, author: 1, likes: 1 });
+    res.json(blog.toJSON());
+  } catch (err) {
+    res.status(400).json({
+      error: err.message
+    });
+  }
+});
+
 module.exports = blogsRouter;

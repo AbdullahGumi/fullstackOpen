@@ -87,7 +87,13 @@ const App = () => {
     setNewBlogButtonText('New Blog');    
   }
 
-
+  const blogsStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
 
   return (
     <div>
@@ -102,6 +108,9 @@ const App = () => {
             </Route>          
             <Route path='/users'>
               <Users  users={users}/>
+            </Route>          
+            <Route path='/blogs/:id'>
+              <Blog  blogs={blogs}/>
             </Route>
             <Route exact path='/'>
                 <div>
@@ -113,7 +122,7 @@ const App = () => {
                   <div className= 'blog-list'>
                     {
                       blogs.map(blog =>
-                      <Blog key={blog.id} blog={blog}/>
+                      <div style={blogsStyle} key={blog.id} ><Link to ={`/blogs/${blog.id}`}>{blog.title}</Link></div>
                     )              
                     }  
                   </div>            
