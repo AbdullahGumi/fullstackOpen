@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import blogService from '../services/blogs';
 
 
-const Blog = ({ blog, reRenderAfterEvent }) => {
+const Blog = ({ blog }) => {
 
 const [isView, setView] = useState(false);
 const [mainUser, setMainUser] = useState([]);
@@ -40,7 +40,6 @@ const handleLike = (id, blog) => {
 	}
 
 	blogService.likeBlog(id, updatedBlog)
-	reRenderAfterEvent()
 
 }
 

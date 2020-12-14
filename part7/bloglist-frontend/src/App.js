@@ -5,7 +5,7 @@ import Blog from './components/Blog';
 import Notfication from './components/Notification';
 import { setNotification } from './reducers/notificationReducer';
 import { setUsername, setUser, setPassword } from './reducers/userReducer';
-import { setBlogs } from './reducers/blogsReducer';
+import { createNewBlog, initializeBlogs } from './reducers/blogsReducer';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -50,9 +50,7 @@ const App = () => {
 
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      dispatch(setBlogs(blogs))
-    )  
+      dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -76,15 +74,10 @@ const App = () => {
   }
 
   const handleBlogAddition = async (newBlog) => {
-    const blog = await blogService.createBlog(newBlog);
-    dispatch(setBlogs([...blogs, blog]));
+    dispatch(createNewBlog(newBlog));
     dispatch(setNotification(`a new blog "${newBlog.title}" by ${newBlog.author} was added`, 'green', 5))
     setNewBlogFormToggled(false);
     setNewBlogButtonText('New Blog');    
-  }
-
-  const reRenderAfterEvent = () => {
-    dispatch(setBlogs([...blogs]))
   }
 
   return (
@@ -101,7 +94,7 @@ const App = () => {
           <div className= 'blog-list'>
             {
               blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} reRenderAfterEvent={reRenderAfterEvent} />
+              <Blog key={blog.id} blog={blog}/>
             )              
             }  
           </div>          
