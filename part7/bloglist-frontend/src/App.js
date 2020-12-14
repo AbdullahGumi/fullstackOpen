@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NewBlog from './components/NewBlog';
 import Blog from './components/Blog';
 import Users from './components/Users';
+import User from './components/User';
 
 import Notfication from './components/Notification';
 import { setNotification } from './reducers/notificationReducer';
@@ -9,7 +10,7 @@ import { setUsername, setUser, setPassword } from './reducers/userReducer';
 import { createNewBlog, initializeBlogs } from './reducers/blogsReducer';
 
 import { useDispatch, useSelector } from 'react-redux';
-import {Switch, Link, Route} from 'react-router-dom';
+import { Switch, Link, Route } from 'react-router-dom';
 
 import blogService from './services/blogs';
 import loginService from './services/login';
@@ -86,20 +87,25 @@ const App = () => {
     setNewBlogButtonText('New Blog');    
   }
 
+
+
   return (
     <div>
       <Notfication/>
     {user ? (
         <div>
-          <Link to ='/users'>View all users</Link>
+          <h2>Blogs</h2>
+          <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
           <Switch>
+            <Route path='/users/:id'>
+              <User users={users}/>
+            </Route>          
             <Route path='/users'>
-              <Users users={users}/>
+              <Users  users={users}/>
             </Route>
             <Route exact path='/'>
                 <div>
-                  <h2>blogs</h2>
-                  <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
+                  <p><Link to ='/users'>View all users</Link></p>
                   {isNewBlogFormToggled &&
                     <NewBlog onBlogAdd={handleBlogAddition}/>            
                   }
