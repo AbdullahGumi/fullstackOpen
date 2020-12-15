@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 
+import Comments from './Comments';
+
 import blogService from '../services/blogs';
 
 
@@ -57,6 +59,7 @@ const handleDelete = (blog) => {
 			    {mainUser.id === sameBlog.user.id &&
 					<button onClick={() => handleDelete(sameBlog)}>Remove</button>
 			    }
+			    <Comments sameBlog={sameBlog}/>
 			  </div>		  	
 		  }
 	  </div>
