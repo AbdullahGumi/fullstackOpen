@@ -3,6 +3,7 @@ import NewBlog from './components/NewBlog';
 import Blog from './components/Blog';
 import Users from './components/Users';
 import User from './components/User';
+import Navigation from './components/Navigation';
 
 import Notfication from './components/Notification';
 import { setNotification } from './reducers/notificationReducer';
@@ -98,10 +99,10 @@ const App = () => {
   return (
     <div>
       <Notfication/>
+      <Navigation user={user} logout={logout}/>
     {user ? (
         <div>
-          <h2>Blogs</h2>
-          <p>Logged in as {user.name}<button onClick={logout}>Logout</button></p>
+          <h2>Blogs App</h2>
           <Switch>
             <Route path='/users/:id'>
               <User users={users}/>
@@ -114,7 +115,6 @@ const App = () => {
             </Route>
             <Route exact path='/'>
                 <div>
-                  <p><Link to ='/users'>View all users</Link></p>
                   {isNewBlogFormToggled &&
                     <NewBlog onBlogAdd={handleBlogAddition}/>            
                   }
