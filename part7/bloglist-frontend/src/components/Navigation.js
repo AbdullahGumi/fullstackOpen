@@ -1,23 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Navbar, Nav, Button } from 'react-bootstrap';
+
 
 const Navigation = ({ user, logout }) => {
 
-  const menuStyle = {
+  const navStyle = {
     paddingTop: 10,
-    paddingLeft: 5,
-    paddingBottom: 5,
-    borderWidth: 1,
-    marginBottom: 5,
-    backgroundColor: 'dodgerblue',
+    marginTop: 5
   }
 
 	return (
-		<div style={menuStyle}>
-	      <span><Link to ='/'>blogs</Link> </span>		
-	      <span> <Link to ='/users'>users</Link> </span>		
-          <span>Logged in as {user && user.name} <button onClick={logout}>Logout</button></span>
-		</div>
+    <div>
+      {user && 
+      <Navbar style={navStyle} collapseOnSelect expand="lg" bg="light" variant="primary">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#" as="span">
+              <Link  to="/">blogs</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link  to="/users">users</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+                 <em> logged in as {user.name} <Button variant="outline-success" size='sm' onClick={logout}>Logout</Button></em>
+          </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      }
+    </div>
 	);
 }
 

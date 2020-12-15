@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { Button, Card } from 'react-bootstrap';
 
 import Comments from './Comments';
 
@@ -19,15 +20,6 @@ const [mainUser, setMainUser] = useState([]);
         blogService.setToken(user.token)
     }
   }, [])
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
 
 const handleLike = (id, blog) => {
 	const updatedBlog = {
@@ -49,18 +41,20 @@ const handleDelete = (blog) => {
 }
 
 	return (
-	  <div style={blogStyle} className='blog'>
+	  <div className='blog'>
 		  {sameBlog &&
-			  <div className='blog-details'>
-			    <h1>{sameBlog.title}</h1>
-			    <a href={`${sameBlog.url}`}>{sameBlog.url}</a>
-			    <p className='liked'>{sameBlog.likes} likes <button onClick={()=> handleLike(sameBlog.id, sameBlog)}>like</button></p>
-			    <p>added by {sameBlog.author}</p>
-			    {mainUser.id === sameBlog.user.id &&
-					<button onClick={() => handleDelete(sameBlog)}>Remove</button>
-			    }
-			    <Comments sameBlog={sameBlog}/>
-			  </div>		  	
+			  <Card className='blog-details'>
+			    <Card.Header>{sameBlog.title}</Card.Header>
+			    <Card.Body>
+				    <a href={`${sameBlog.url}`}>{sameBlog.url}</a>
+				    <Card.Text className='liked'>{sameBlog.likes} likes <Button variant="outline-success" size='sm' onClick={()=> handleLike(sameBlog.id, sameBlog)}>like</Button></Card.Text>
+				    <Card.Text>added by {sameBlog.author}</Card.Text>
+				    {mainUser.id === sameBlog.user.id &&
+						<Button variant="outline-success" size='sm' onClick={() => handleDelete(sameBlog)}>Remove</Button>
+				    }
+				    <Comments sameBlog={sameBlog}/>
+			    </Card.Body>
+			  </Card>		  	
 		  }
 	  </div>
 	);

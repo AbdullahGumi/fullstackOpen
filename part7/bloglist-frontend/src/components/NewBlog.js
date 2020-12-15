@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+
 
 const NewBlog = ({ onBlogAdd }) => {
 
@@ -52,7 +54,7 @@ const NewBlog = ({ onBlogAdd }) => {
                 onChange={({ target }) => setUrl(target.value)}
               />
             </div>            
-            <button type="submit">create</button>
+            <Button variant="outline-success" size='sm' type="submit">create</Button>
           </form>              
 		</div>
 	);

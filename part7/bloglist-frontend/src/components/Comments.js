@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 
 import commentsService from '../services/comments';
 
@@ -20,7 +21,7 @@ const Comments = ({ sameBlog }) => {
 	return (
 		<div>
           <h2>comments</h2>
-          <button onClick={() => setFormVisible(true)}>add a comment</button>
+          <Button variant="outline-success" size='sm' onClick={() => setFormVisible(true)}>add a comment</Button>
           {comments && comments.map(comment => <li key={comment.id}>{comment.comment}</li>)}
           {isFormVisible &&
             <form onSubmit={handleSubmit}>
@@ -33,7 +34,7 @@ const Comments = ({ sameBlog }) => {
                   onChange={({ target }) => setComment(target.value)}
                 />
               </div>            
-              <button type="submit">create</button>
+              <Button variant="outline-success" size='sm' type="submit">create</Button>
             </form>              
           }            
 		</div>

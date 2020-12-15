@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { Table } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
 const Users = ({ users }) => (
 	<div>
-		<table>		
+		<Table bordered variant='success'>	
 			<tbody>
 				<tr>
 					<th>Users</th>
@@ -26,7 +26,7 @@ const Users = ({ users }) => (
 				)
 			})
 		}
-		</table>
+		</Table>
 	</div>
 )
 

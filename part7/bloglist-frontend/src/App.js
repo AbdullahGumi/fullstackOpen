@@ -12,6 +12,7 @@ import { createNewBlog, initializeBlogs } from './reducers/blogsReducer';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Link, Route } from 'react-router-dom';
+import { Table, Form, Button } from 'react-bootstrap';
 
 import blogService from './services/blogs';
 import loginService from './services/login';
@@ -48,7 +49,7 @@ const App = () => {
       dispatch(setUsername(''));
       dispatch(setPassword(''));
     } catch(e) {
-      dispatch(setNotification('Invalid username or password', 'red', 5))
+      dispatch(setNotification('Invalid username or password', 'danger', 5))
     }
 
   }
@@ -83,21 +84,13 @@ const App = () => {
 
   const handleBlogAddition = async (newBlog) => {
     dispatch(createNewBlog(newBlog));
-    dispatch(setNotification(`a new blog "${newBlog.title}" by ${newBlog.author} was added`, 'green', 5))
+    dispatch(setNotification(`a new blog "${newBlog.title}" by ${newBlog.author} was added`, 'success', 5))
     setNewBlogFormToggled(false);
     setNewBlogButtonText('New Blog');    
   }
 
-  const blogsStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
   return (
-    <div>
+    <div className="container">
       <Notfication/>
       <Navigation user={user} logout={logout}/>
     {user ? (
@@ -118,14 +111,16 @@ const App = () => {
                   {isNewBlogFormToggled &&
                     <NewBlog onBlogAdd={handleBlogAddition}/>            
                   }
-                  <button onClick={toggleNewBlogsForm}>{newBlogButtonText}</button>
-                  <div className= 'blog-list'>
-                    {
-                      blogs.map(blog =>
-                      <div style={blogsStyle} key={blog.id} ><Link to ={`/blogs/${blog.id}`}>{blog.title}</Link></div>
-                    )              
-                    }  
-                  </div>            
+                  <Button variant="outline-success" size='sm' onClick={toggleNewBlogsForm}>{newBlogButtonText}</Button>
+                  <Table variant='success' hover striped className= 'blog-list'>
+                    <tbody>
+                      {
+                        blogs.map(blog =>
+                        <tr key={blog.id} ><td><Link to ={`/blogs/${blog.id}`}>{blog.title}</Link></td></tr>
+                      )              
+                      }                       
+                    </tbody> 
+                  </Table>            
                 </div>          
             </Route>
           </Switch>
@@ -134,27 +129,27 @@ const App = () => {
         <div>
           <h2>Log in to application</h2>
           <form onSubmit={handleLogin}>
-            <div>
-              username
-                <input
-                id='username'
-                type="text"
-                value={username}
-                name="Username"
-                onChange={({ target }) => dispatch(setUsername(target.value))}
-              />
-            </div>
-            <div>
-              password
-                <input
-                id='password'
-                type="password"
-                value={password}
-                name="Password"
-                onChange={({ target }) => dispatch(setPassword(target.value))}
-              />
-            </div>
-            <button id='login-button' type="submit">login</button>
+          <Form.Group>
+            <Form.Label>username:</Form.Label>
+            <Form.Control
+              id='username'
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => dispatch(setUsername(target.value))}
+            />
+            <Form.Label>password:</Form.Label>
+            <Form.Control
+              id='password'
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => dispatch(setPassword(target.value))}            
+            />
+            <Button id='login-button' variant="outline-success" size='sm' type="submit">
+              login
+            </Button>
+          </Form.Group>
           </form>          
         </div>
       )
