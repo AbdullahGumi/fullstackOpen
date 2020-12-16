@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server')
+const _ = require('lodash');
 
 let authors = [
   {
@@ -25,11 +26,6 @@ let authors = [
     id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
   },
 ]
-
-/*
- * Saattaisi olla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
- * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
-*/
 
 let books = [
   {
@@ -90,11 +86,20 @@ const typeDefs = gql`
     author: String!
     id: ID!
     genres: [String]!
-  }  
+  }
+
+  type Author {
+    name: String!
+    id: ID!
+    born: Int
+    bookCount: Int!
+  } 
+
   type Query {
     bookCount: Int!
     authorCount: Int!
     allBooks: [Book!]!
+    allAuthors: [Author!]!
   }
 `
 
@@ -102,8 +107,13 @@ const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: () => books
-
+    allBooks: () => books,
+    allAuthors: () => {
+      const bookCounts = _.countBy(books, book => book.author)
+      const authorsWithBookCount = authors.map(author => ({...author, bookCount: bookCounts[author.name]}))
+      return authorsWithBookCount;
+    
+    },    
   }
 }
 
