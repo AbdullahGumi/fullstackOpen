@@ -123,7 +123,7 @@ const resolvers = {
     authorCount: () => authors.length,
     allBooks: (root, args) => {
       let allBooks = []
-      if (!args) {
+      if (!args.genre &&  !args.author) {
         return books;
       }
       if (args.genre) {
