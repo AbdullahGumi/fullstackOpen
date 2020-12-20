@@ -10,7 +10,7 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
   const [addedBook] = useMutation(CRAETE_BOOK, {
-    refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ]
+    refetchQueries: [ { query: ALL_BOOKS, variables: { author: '', genre: ''} }, { query: ALL_AUTHORS } ]
   });
 
   if (!props.show) {

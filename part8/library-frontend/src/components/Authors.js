@@ -14,7 +14,7 @@ const Authors = (props) => {
   if (!props.show) {
     return null
   }
-  const authors = result.loading ? [] : result.data.allAuthors;
+  const authors = !result.data ? [] : result.data.allAuthors;
 
   const handleSubmit = (e) => {
     e.preventDefault();

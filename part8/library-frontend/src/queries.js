@@ -25,18 +25,6 @@ query {
   }
 }
 `
-export const ALL_BOOKS = gql`
-query {
-  allBooks{
-    title
-    author {
-      name
-    }
-    published
-    genres
-  }
-}
-`
 
 export const EDIT_AUTHOR = gql`
   mutation editAuthor($name: String!, $setBornTo: Int!) {
@@ -64,7 +52,7 @@ export const USER = gql`
     }
   }
 `
-export const ALL_BOOKS_BY_GENRE = gql`
+export const ALL_BOOKS = gql`
 query allBooks($genre: String!){
   allBooks(genre: $genre) {
     title
