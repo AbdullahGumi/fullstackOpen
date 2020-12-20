@@ -63,4 +63,17 @@ query allBooks($genre: String!){
     genres
   }
 }
+` 
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded{
+      title
+      author {
+        name
+        born
+      }
+      genres
+      published
+    }
+  }
 `
