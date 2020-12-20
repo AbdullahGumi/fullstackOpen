@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useMutation, useSubscription } from '@apollo/client';
+import { useMutation, useSubscription, useApolloClient } from '@apollo/client';
 
 import { CRAETE_BOOK, ALL_BOOKS, ALL_AUTHORS, BOOK_ADDED } from '../queries';
 
@@ -10,14 +10,21 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
   const [addedBook] = useMutation(CRAETE_BOOK, {
-    refetchQueries: [ { query: ALL_BOOKS, variables: { author: '', genre: ''} }, { query: ALL_AUTHORS } ]
+    refetchQueries: [ { query: ALL_AUTHORS } ]
   });
-
+  
+  const client = useApolloClient();
 
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const addedBook = subscriptionData.data.bookAdded
       alert(`${addedBook.title} was added`)
+      const dataInStore = client.readQuery({ query: ALL_BOOKS, variables: { author: '', genre: ''} })
+      client.writeQuery({
+        query: ALL_BOOKS,
+        variables: { author: '', genre: ''},
+        data: { allBooks : dataInStore.allBooks.concat(addedBook) }
+      })       
     }
   })
 
