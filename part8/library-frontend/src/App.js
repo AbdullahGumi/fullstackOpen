@@ -44,7 +44,7 @@ const App = () => {
           <Authors show={page === 'authors'} token={token}/>
           <Books show={page === 'books'} />
           <NewBook show={page === 'add'} />
-          <Recommend show={page === 'recommend'} />
+          <Recommend show={page === 'recommend'} token={token} />
           <Login show={page === 'login'} setToken={setToken} token={token} setPage={setPage}/>
        </div>
     </div>
