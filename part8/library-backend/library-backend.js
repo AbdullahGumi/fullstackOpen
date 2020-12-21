@@ -26,7 +26,7 @@ const typeDefs = gql`
     name: String!
     id: ID!
     born: Int
-    bookCount: Int!
+    bookCount: Int
   } 
 
   type User {
@@ -87,20 +87,11 @@ const resolvers = {
       else {
         books = await Book.find({ genres: { $in: [args.genre] } }).populate('author')
       }
-      books = books.map(book => ({
-        ...book._doc,
-        id: book._doc._id,
-        author: {
-          ...book._doc.author._doc,
-          id: book._doc.author._doc._id,
-          bookCount: Book.countDocuments({ author: book._doc.author._doc._id })
-        }
-      }))
       return books
     },
     allAuthors: async () => {
       const authors = await Author.find({})
-      return authors.map(author => ({...author._doc, bookCount: Book.countDocuments({ author: author._id })}))
+      return authors
     },
     me: (root, args, { currentUser }) => currentUser   
   },
@@ -114,7 +105,8 @@ const resolvers = {
       if (!author) {
         author = new Author({
           name: args.author,
-          born: null
+          born: null,
+          bookCount: 1
         })
         try {
           await author.save()
@@ -123,6 +115,9 @@ const resolvers = {
             invalidArgs: args
           })
         }
+      } else {
+        author.bookCount = author.bookCount + 1
+        await author.save()        
       }
       const newBook = new Book({...args, author})
       try {
