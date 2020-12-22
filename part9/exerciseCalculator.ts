@@ -9,6 +9,24 @@ interface Result {
 
 }
 
+interface calVariable {
+	goal: number,
+	array: Array<string>
+}
+
+const parseArguments = (args: Array<string>): calVariable => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args.slice(3)))) {
+    return {
+      goal: Number(args[2]),
+      array: args.slice(3)
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
 const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Result => {
 	const numberOfDays = daysWithHoursOfTraining.length;
 	const numberOfTrainingDays = daysWithHoursOfTraining.filter(hour => hour !== 0).length;
@@ -44,5 +62,5 @@ const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Re
 		rating
 	}
 }
-
-console.log(calculateExercises([0, 0, 0, 4.5, 0, 1, 1], 2))
+const { goal, array } = parseArguments(process.argv);
+console.log(calculateExercises(array.map(number => Number(number)), goal))
