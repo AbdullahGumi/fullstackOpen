@@ -17,7 +17,7 @@ const parseArguments = (args: Array<string>): BmiVariables => {
   }
 }
 
-const calculateBmi = (height: number,  weight: number): string => {
+export const calculateBmi = (height: number,  weight: number): string | void => {
 	const bmi = weight / (height / 100) ** 2;
   if (bmi < 15) return "Very severely underweight";
   if (bmi >= 15 && bmi < 16) return "Severely underweight";
