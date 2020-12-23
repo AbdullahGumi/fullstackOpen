@@ -27,7 +27,7 @@ const parseArguments = (args: Array<string>): calVariable => {
   }
 };
 
-const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Result => {
+export const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Result => {
 	const numberOfDays = daysWithHoursOfTraining.length;
 	const numberOfTrainingDays = daysWithHoursOfTraining.filter(hour => hour !== 0).length;
 	const totalHour = daysWithHoursOfTraining.reduce((acc, index) => acc + index, 0);
@@ -64,3 +64,4 @@ const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Re
 };
 const { goal, array } = parseArguments(process.argv);
 console.log(calculateExercises(array.map(number => Number(number)), goal));
+console.log("An error has occured:", e.message);
