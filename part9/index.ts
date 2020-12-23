@@ -44,7 +44,7 @@ app.post('/exercises', (_req, _res) => {
   }
 
   return _res.json(calculateExercises(exercises, target));
-})
+});
 
 const PORT = 3003;
 
