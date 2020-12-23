@@ -21,18 +21,18 @@ const parseArguments = (args: Array<string>): calVariable => {
     return {
       goal: Number(args[2]),
       array: args.slice(3)
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Result => {
 	const numberOfDays = daysWithHoursOfTraining.length;
 	const numberOfTrainingDays = daysWithHoursOfTraining.filter(hour => hour !== 0).length;
 	const totalHour = daysWithHoursOfTraining.reduce((acc, index) => acc + index, 0);
 	const averageTime = totalHour / numberOfDays;
-	let isTargetReached = averageTime >= goal;
+	const isTargetReached = averageTime >= goal;
 	const percentageRating = (averageTime / goal) * 100;
 	let rating;
 	let description;
@@ -60,7 +60,7 @@ const calculateExercises = (daysWithHoursOfTraining: number[], goal: number): Re
 		goal,
 		description,
 		rating
-	}
-}
+	};
+};
 const { goal, array } = parseArguments(process.argv);
-console.log(calculateExercises(array.map(number => Number(number)), goal))
+console.log(calculateExercises(array.map(number => Number(number)), goal));

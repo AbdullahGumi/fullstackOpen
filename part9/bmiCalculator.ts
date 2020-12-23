@@ -11,11 +11,11 @@ const parseArguments = (args: Array<string>): BmiVariables => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 export const calculateBmi = (height: number,  weight: number): string | void => {
 	const bmi = weight / (height / 100) ** 2;
@@ -27,7 +27,7 @@ export const calculateBmi = (height: number,  weight: number): string | void => 
   if (bmi >= 30 && bmi < 35) return "Obese Class I (Moderately obese)";
   if (bmi >= 35 && bmi < 40) return "Obese Class II (Severely obese)";
   if (bmi >= 40) return "Obese Class III (Very severely obese)";
-}
+};
 
 try {
 	const { height, weight } = parseArguments(process.argv);
