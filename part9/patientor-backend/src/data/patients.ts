@@ -1,4 +1,6 @@
-[
+import { Patient } from '../types';
+
+const patientsData: Patient[] = [
     {
         "id": "d2773336-f723-11e9-8f0b-362b9e155667",
         "name": "John McClane",
@@ -40,3 +42,5 @@
         "occupation": "Digital evangelist"
     }
 ]
+
+export default patientsData;
