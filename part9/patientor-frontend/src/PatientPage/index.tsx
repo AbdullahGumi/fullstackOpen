@@ -52,6 +52,8 @@ const PatientPage: React.FC = () => {
     }
   }, [id, dispatch]);
 
+  if (!patient) return null;
+
   return (
     <Container>
       <h1>
@@ -65,6 +67,20 @@ const PatientPage: React.FC = () => {
       <p>
         <strong>Occupation:</strong> {patient.occupation}
       </p>
+      {patient.entries.length > 0 && <h2>Entries</h2>}
+      {patient.entries.map((entry) => (
+        <Container key={entry.id}>
+          <p>
+            <strong>{entry.date}: </strong> {entry.description}
+          </p>
+
+          <ul>
+            {entry.diagnosisCodes?.map((code) => (
+              <li key={Math.floor(Math.random() * 100000)}>{code}</li>
+            ))}
+          </ul>
+        </Container>
+      ))}
     </Container>
   );
 };
