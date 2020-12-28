@@ -1,7 +1,7 @@
 import patientsData from '../data/patients';
 // import patientsJson from '../data/patients.json';
 
-import { NonSensitivePatientEntry, NewPatientEntry, Patient } from '../types';
+import { NonSensitivePatientEntry, NewPatientEntry, Patient, Entry, NewEntry} from '../types';
 
 const getPatients = (): NonSensitivePatientEntry[] => {
 	  return patientsData.map(({ id, name, dateOfBirth, gender, occupation, entries }) => {
@@ -11,7 +11,7 @@ const getPatients = (): NonSensitivePatientEntry[] => {
 
 const addPatient = (patient: NewPatientEntry): Patient => {
 
-  const newPatientEntry = {...patient, id: Math.floor(Math.random() * 100000).toString(), entries: []}
+  const newPatientEntry = {...patient, id: Math.floor(Math.random() * 100000).toString(), entries: [] as Entry[]}
   patientsData.push(newPatientEntry);
   return newPatientEntry;
 };
@@ -21,4 +21,12 @@ const findPatientById = (id: any): Patient | undefined => {
   return patientById;
 };
 
-export default { getPatients, addPatient, findPatientById };
+const addEntry = (patient: Patient, newEntry: NewEntry): Patient => {
+  const entry: Entry = { ...newEntry, id: Math.floor(Math.random() * 100000).toString() };
+  const savedPatient = { ...patient, entries: patient.entries.concat(entry) };
+  patientsData.map((p) => (p.id === savedPatient.id ? savedPatient : p));
+
+  return savedPatient;
+};
+
+export default { getPatients, addPatient, findPatientById, addEntry };
