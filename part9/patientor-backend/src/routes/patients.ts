@@ -14,7 +14,7 @@ router.post('/', (_req, _res) => {
 		const newPatient = patientsServices.addPatient(patientToAdd);
 		_res.json(newPatient);
 	} catch(e) {
-	    _res.status(400).send(e.message);
+	    _res.status(400).send({ error: e.message});
 	}
 });
 
@@ -37,7 +37,7 @@ router.post("/:id/entries", (req, res) => {
       const updatedPatient = patientsServices.addEntry(patient, newEntry);
       res.json(updatedPatient);
     } catch (e) {
-      res.status(400).send(e.message);
+      res.status(400).send({ error: e.message});
     }
   } else {
     res.status(404).send("Not Found");

@@ -5,9 +5,9 @@ const isString = (text: any): text is string => {
   return typeof text === "string" || text instanceof String;
 };
 
-const isDate = (date: any) => {
-    return Boolean(Date.parse(date));
-};
+// const isDate = (date: any) => {
+//     return Boolean(Date.parse(date));
+// };
 
 const isGender = (param: any): param is Gender => {
   return Object.values(Gender).includes(param);
@@ -42,7 +42,7 @@ const parseGender = (gender: any): Gender => {
 
 
 const parseToDate = (param: any, paramName: string): string => {
-  if (!param || !isString(param) || !isDate(param)) {
+  if (!param || !isString(param)) {
     throw new Error(`Incorrect or missing ${paramName}: ${param}`);
   }
   return param;
