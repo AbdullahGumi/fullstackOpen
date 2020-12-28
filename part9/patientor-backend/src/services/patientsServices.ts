@@ -3,8 +3,10 @@ import patientsData from '../data/patients';
 
 import { NonSensitivePatientEntry, NewPatientEntry, Patient, Entry, NewEntry} from '../types';
 
+let savedPatients = [...patientsData];
+
 const getPatients = (): NonSensitivePatientEntry[] => {
-	  return patientsData.map(({ id, name, dateOfBirth, gender, occupation, entries }) => {
+	  return savedPatients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => {
     return { id, name, dateOfBirth, gender, occupation, entries };
   });
 };
@@ -12,19 +14,20 @@ const getPatients = (): NonSensitivePatientEntry[] => {
 const addPatient = (patient: NewPatientEntry): Patient => {
 
   const newPatientEntry = {...patient, id: Math.floor(Math.random() * 100000).toString(), entries: [] as Entry[]}
-  patientsData.push(newPatientEntry);
+  savedPatients = savedPatients.concat(newPatientEntry);
   return newPatientEntry;
 };
 
 const findPatientById = (id: any): Patient | undefined => {
-  const patientById = patientsData.find(patient => patient.id === id);
+  const patientById = savedPatients.find(patient => patient.id === id);
   return patientById;
 };
 
 const addEntry = (patient: Patient, newEntry: NewEntry): Patient => {
   const entry: Entry = { ...newEntry, id: Math.floor(Math.random() * 100000).toString() };
   const savedPatient = { ...patient, entries: patient.entries.concat(entry) };
-  patientsData.map((p) => (p.id === savedPatient.id ? savedPatient : p));
+  console.log('savedPatient:', savedPatient)
+  savedPatients = savedPatients.map((p) => (p.id === savedPatient.id ? savedPatient : p));
 
   return savedPatient;
 };
